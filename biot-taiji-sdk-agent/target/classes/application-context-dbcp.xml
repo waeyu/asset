@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd ">
+	
+	<bean id="dataSource" class="com.sds.afi.dao.SecuredDataSource" init-method="getConnection" destroy-method="close"> 
+		<property name="driverClassName" value="#{comProperties['jdbc.driverClass']}" /> 
+		<property name="url" value="#{comProperties['jdbc.url']}"/>
+		<property name="username" value="#{comProperties['jdbc.user']}"/>
+		<property name="password" value="#{comProperties['jdbc.password']}"/>
+				
+		<property name="defaultAutoCommit" value="#{comProperties['jdbc.defaultAutoCommit'] != null ? comProperties['jdbc.defaultAutoCommit'] : true }"/>
+		<property name="poolPreparedStatements" value="true"/>
+		<property name="maxOpenPreparedStatements" value="30"/>
+		<property name="maxActive" value="#{comProperties['jdbc.maxActive'] != null ? comProperties['jdbc.maxActive'] : 10 }" />
+		<property name="maxIdle"   value="#{comProperties['jdbc.maxIdle'] != null ? comProperties['jdbc.maxIdle'] : 10 }" />
+		<property name="minIdle"  value="#{comProperties['jdbc.minIdle'] != null ? comProperties['jdbc.minIdle'] : 3 }" />
+		<property name="maxWait" value="#{comProperties['jdbc.maxWait'] != null ? comProperties['jdbc.maxWait'] : 500 }" />
+		<property name="removeAbandoned" value="true"/>
+		<property name="removeAbandonedTimeout" value="#{comProperties['jdbc.removeAbandonedTimeout'] != null ? comProperties['jdbc.removeAbandonedTimeout'] : 5 }" />
+        <property name="testWhileIdle"          value="true"/>
+        <property name="timeBetweenEvictionRunsMillis" value="#{comProperties['jdbc.timeBetweenEvictionRunsMillis'] != null ? comProperties['jdbc.timeBetweenEvictionRunsMillis'] : 600000 }" />
+	</bean>	 
+
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+    
+</beans>

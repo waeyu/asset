@@ -1,0 +1,100 @@
+[2019-03-08 10:25:53.394] [INFO ] [main      ] com.sds.ocp.run.ModMain              Starting ModMain v0.9 on AndyPC with PID 14620 (D:\tool\works_taiji\biot-taiji-sdk-agent\target\biot-taiji-sdk-agent-0.9.jar started by SDS in D:\tool\works_taiji\biot-taiji-sdk-agent\target)
+[2019-03-08 10:25:53.398] [INFO ] [main      ] com.sds.ocp.run.ModMain              No active profile set, falling back to default profiles: default
+[2019-03-08 10:25:53.446] [INFO ] [main      ] a.AnnotationConfigApplicationContext Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@22a71081: startup date [Fri Mar 08 10:25:53 KST 2019]; root of context hierarchy
+[2019-03-08 10:25:53.681] [INFO ] [main      ] o.s.b.f.xml.XmlBeanDefinitionReader  Loading XML bean definitions from class path resource [application-context.xml]
+[2019-03-08 10:25:53.788] [INFO ] [main      ] o.s.b.f.xml.XmlBeanDefinitionReader  Loading XML bean definitions from class path resource [application-context-dbcp.xml]
+[2019-03-08 10:25:53.859] [INFO ] [main      ] o.s.i.config.IntegrationRegistrar    No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+[2019-03-08 10:25:54.051] [INFO ] [main      ] tConfiguringBeanFactoryPostProcessor No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+[2019-03-08 10:25:54.057] [INFO ] [main      ] tConfiguringBeanFactoryPostProcessor No bean named 'taskScheduler' has been explicitly defined. Therefore, a default ThreadPoolTaskScheduler will be created.
+[2019-03-08 10:25:54.137] [INFO ] [main      ] ionDelegate$BeanPostProcessorChecker Bean 'org.springframework.integration.config.IntegrationManagementConfiguration' of type [org.springframework.integration.config.IntegrationManagementConfiguration$$EnhancerBySpringCGLIB$$bb78aa0f] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[2019-03-08 10:25:54.144] [INFO ] [main      ] ionDelegate$BeanPostProcessorChecker Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$5086eee0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[2019-03-08 10:25:55.867] [INFO ] [pGroup-2-1] com.sds.ocp.sdk.IotAuthManager       
+
+================== Received Data ===================
+{"userId":"taiji-agent@taiji.com.cn","userPassword":"","customerId":"C000000003","isLoginSuccess":"Y","authorityCode":"DEV","userStateCode":"ACT","authToken":"kWjjUPzSGLuJwcocOg5SAe7CaG5a5sxsP5AjEfloOXMk6dLWwZU05kIWS7Lt2vCxYAUVHmRpkfr/i9PiLEXvPWBUrX6fbrexpeu4HhqTWE8="}
+====================================================
+[2019-03-08 10:25:55.933] [INFO ] [pGroup-3-1] com.sds.ocp.sdk.IotAuthManager       
+
+================== Received Data ===================
+{"ip":"local.insator.io","port":"8003","sslOpts":0,"isSsl":"false","msgHeaderType":"D","encType":"0","authCode":"0b5ea09d38c5507a"}
+====================================================
+[2019-03-08 10:25:55.939] [INFO ] [main      ] com.sds.ocp.sdk.IotAuthManager       ========= Received Server Info. {"authCode":"0b5ea09d38c5507a"}
+[2019-03-08 10:25:55.944] [INFO ] [main      ] c.sds.ocp.sdk.message.DataCompressor Compression bytes is : 0
+[2019-03-08 10:25:55.945] [INFO ] [main      ] com.sds.ocp.sdk.IotConnectManager    
+===========================================================
+Connect Server URI : ws://local.insator.io:8003
+Connect Protocol   : webs
+Connect keepAlive  : 2 (min)
+Brightics SDK. ver.: v2.7.0.1
+===========================================================
+[2019-03-08 10:25:55.953] [INFO ] [main      ] com.sds.ocp.sdk.IotConnectManager    
+===========================================================
+||     Site id           : S00002
+||     Thing name        : VisitSensor.vSensor1001
+||     Auth object       : ItaAuthVO [authToken=null, authCode=0b5ea09d38c5507a, encType=NON, serverRequestVo=null, ip=local.insator.io, userToken=null, port=8003, messageHeaderType=DEL_HEADER, sslYn=false, module=null, twoWayYn=false, siteId=null, serverUri=ws://local.insator.io:8003]
+===========================================================
+[2019-03-08 10:25:55.999] [INFO ] [main      ] c.sds.ocp.sdk.message.DataCompressor Compression bytes is : 0
+[2019-03-08 10:25:56.002] [INFO ] [main      ] com.sds.ocp.sdk.IotConnectManager    => SEND (to server) Making message is : [1.0|Q|002|S00002|VisitSensor.vSensor1001||MSGAUTH00002|30085bc8-bc77-413e-8fa2-e23182e17c4d|1552008356002|||application/json|0|0||31|{"authCode":"0b5ea09d38c5507a"}]
+[2019-03-08 10:25:56.018] [INFO ] [pGroup-4-1] com.sds.ocp.sdk.IotConnectManager    
+
+################### Auth Token Result #####################
+>>>>>>>>>>>> [Aurh Token] : 5ae820ad-0169-1000-0001-672964bcd778
+>>>>>>>>>>>> [Server Encryption Type] : 0 (g_encType : 0)
+###########################################################
+
+[2019-03-08 10:25:56.018] [INFO ] [pGroup-4-1] com.sds.ocp.sdk.IoTMessageListener   
+============= InsatorConnistener the Message =============
+======= Res Code      : 200 : OK
+======= Msg Code      : MSGAUTH00003 : Auth Process (2)
+======= Msg Type      : A
+======= Message Id    : 30085bc8-bc77-413e-8fa2-e23182e17c4d
+======= Response data : {encType=0, authToken=5ae820ad-0169-1000-0001-672964bcd778}
+===========================================================
+[2019-03-08 10:25:56.019] [INFO ] [main      ] com.sds.ocp.sdk.IotConnectManager    
+
+>>>>>>>>>>>>>>>>>>>> VisitSensor.vSensor1001 thing is connected !! <<<<<<<<<<<<<<<<<<<< 
+
+[2019-03-08 10:25:56.038] [INFO ] [main      ] o.s.s.c.ThreadPoolTaskScheduler      Initializing ExecutorService  'taijiModuleScheduler'
+[2019-03-08 10:25:56.227] [INFO ] [main      ] o.s.s.c.ThreadPoolTaskScheduler      Initializing ExecutorService  'taskScheduler'
+[2019-03-08 10:25:56.490] [INFO ] [main      ] o.s.j.e.a.AnnotationMBeanExporter    Registering beans for JMX exposure on startup
+[2019-03-08 10:25:56.502] [INFO ] [main      ] o.s.c.s.DefaultLifecycleProcessor    Starting beans in phase 0
+[2019-03-08 10:25:56.502] [INFO ] [main      ] o.s.i.endpoint.EventDrivenConsumer   Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+[2019-03-08 10:25:56.503] [INFO ] [main      ] o.s.i.c.PublishSubscribeChannel      Channel 'application.errorChannel' has 1 subscriber(s).
+[2019-03-08 10:25:56.504] [INFO ] [main      ] o.s.i.endpoint.EventDrivenConsumer   started _org.springframework.integration.errorLogger
+[2019-03-08 10:25:56.513] [INFO ] [main      ] com.sds.ocp.run.ModMain              Started ModMain in 3.47 seconds (JVM running for 4.073)
+[2019-03-08 10:25:57.492] [INFO ] [cheduler-1] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:25:49.903, to:2019-03-08 10:25:57.492]
+[2019-03-08 10:26:02.602] [INFO ] [cheduler-1] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:25:57.6, to:2019-03-08 10:26:02.602]
+[2019-03-08 10:26:07.612] [INFO ] [cheduler-2] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:26:02.61, to:2019-03-08 10:26:07.612]
+[2019-03-08 10:26:12.627] [INFO ] [cheduler-1] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:26:07.625, to:2019-03-08 10:26:12.627]
+[2019-03-08 10:26:17.656] [INFO ] [cheduler-3] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:26:12.652, to:2019-03-08 10:26:17.656]
+[2019-03-08 10:26:22.667] [INFO ] [cheduler-2] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:26:17.665, to:2019-03-08 10:26:22.667]
+[2019-03-08 10:26:27.676] [INFO ] [cheduler-4] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:26:22.674, to:2019-03-08 10:26:27.676]
+[2019-03-08 10:26:32.695] [INFO ] [cheduler-1] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:26:27.692, to:2019-03-08 10:26:32.695]
+[2019-03-08 10:26:37.723] [INFO ] [cheduler-5] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:26:32.719, to:2019-03-08 10:26:37.723]
+[2019-03-08 10:26:42.731] [INFO ] [cheduler-3] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:26:37.73, to:2019-03-08 10:26:42.731]
+[2019-03-08 10:26:47.744] [INFO ] [cheduler-3] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:26:42.741, to:2019-03-08 10:26:47.744]
+[2019-03-08 10:26:52.752] [INFO ] [cheduler-3] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:26:47.749, to:2019-03-08 10:26:52.752]
+[2019-03-08 10:26:57.780] [INFO ] [cheduler-3] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:26:52.776, to:2019-03-08 10:26:57.78]
+[2019-03-08 10:27:02.789] [INFO ] [cheduler-3] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:26:57.787, to:2019-03-08 10:27:02.789]
+[2019-03-08 10:27:07.804] [INFO ] [cheduler-3] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:27:02.8, to:2019-03-08 10:27:07.804]
+[2019-03-08 10:27:12.812] [INFO ] [cheduler-3] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:27:07.81, to:2019-03-08 10:27:12.812]
+[2019-03-08 10:27:17.820] [INFO ] [cheduler-3] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:27:12.819, to:2019-03-08 10:27:17.82]
+[2019-03-08 10:27:22.830] [INFO ] [cheduler-3] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:27:17.827, to:2019-03-08 10:27:22.83]
+[2019-03-08 10:27:27.840] [INFO ] [cheduler-3] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:27:22.839, to:2019-03-08 10:27:27.84]
+[2019-03-08 10:27:32.847] [INFO ] [cheduler-3] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:27:27.846, to:2019-03-08 10:27:32.847]
+[2019-03-08 10:27:37.860] [INFO ] [cheduler-3] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:27:32.858, to:2019-03-08 10:27:37.86]
+[2019-03-08 10:27:42.886] [INFO ] [cheduler-3] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:27:37.883, to:2019-03-08 10:27:42.886]
+[2019-03-08 10:27:47.894] [INFO ] [cheduler-3] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:27:42.892, to:2019-03-08 10:27:47.894]
+[2019-03-08 10:27:52.902] [INFO ] [cheduler-3] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:27:47.9, to:2019-03-08 10:27:52.902]
+[2019-03-08 10:27:57.922] [INFO ] [cheduler-3] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:27:52.919, to:2019-03-08 10:27:57.922]
+[2019-03-08 10:28:02.930] [INFO ] [cheduler-3] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:27:57.928, to:2019-03-08 10:28:02.93]
+[2019-03-08 10:28:07.938] [INFO ] [cheduler-3] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:28:02.936, to:2019-03-08 10:28:07.938]
+[2019-03-08 10:30:42.761] [INFO ] [cheduler-3] com.sds.ocp.svc.VisitorInfoService   [from:2019-03-08 10:30:37.758, to:2019-03-08 10:30:42.761]
+[2019-03-08 10:30:47.021] [INFO ] [Thread-4  ] a.AnnotationConfigApplicationContext Closing org.springframework.context.annotation.AnnotationConfigApplicationContext@22a71081: startup date [Fri Mar 08 10:25:53 KST 2019]; root of context hierarchy
+[2019-03-08 10:30:47.030] [INFO ] [Thread-4  ] o.s.c.s.DefaultLifecycleProcessor    Stopping beans in phase 0
+[2019-03-08 10:30:47.030] [INFO ] [Thread-4  ] o.s.i.endpoint.EventDrivenConsumer   Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+[2019-03-08 10:30:47.031] [INFO ] [Thread-4  ] o.s.i.c.PublishSubscribeChannel      Channel 'application.errorChannel' has 0 subscriber(s).
+[2019-03-08 10:30:47.032] [INFO ] [Thread-4  ] o.s.i.endpoint.EventDrivenConsumer   stopped _org.springframework.integration.errorLogger
+[2019-03-08 10:30:47.033] [INFO ] [Thread-4  ] o.s.s.c.ThreadPoolTaskScheduler      Shutting down ExecutorService 'taskScheduler'
+[2019-03-08 10:30:47.034] [INFO ] [Thread-4  ] o.s.j.e.a.AnnotationMBeanExporter    Unregistering JMX-exposed beans on shutdown
+[2019-03-08 10:30:47.035] [INFO ] [Thread-4  ] o.s.s.c.ThreadPoolTaskScheduler      Shutting down ExecutorService 'taijiModuleScheduler'
