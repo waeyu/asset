@@ -17,7 +17,7 @@
 	
 	<task:scheduler id="taijiModuleScheduler" pool-size="10" />
 	<task:scheduled-tasks scheduler="taijiModuleScheduler">
-	
+
 		<task:scheduled ref="moduleExecutor" method="visitorExecute" 
 		      fixed-delay="#{comProperties['visitor.schedule.period'] != null ? comProperties['visitor.schedule.period'] : 5000 }" 		      
 			  initial-delay="#{comProperties['visitor.schedule.initialDelay'] != null ? comProperties['visitor.schedule.initialDelay'] : 1000 }"/>
@@ -37,6 +37,14 @@
 		<task:scheduled ref="moduleExecutor" method="visionExecute" 
 		      fixed-delay="#{comProperties['vision.schedule.period'] != null ? comProperties['vision.schedule.period'] : 60000 }" 		      
 			  initial-delay="#{comProperties['vision.schedule.initialDelay'] != null ? comProperties['vision.schedule.initialDelay'] : 2500 }"/>
+
+		<task:scheduled ref="moduleExecutor" method="buildingEnvExecute" 
+		      fixed-delay="#{comProperties['buildingenv.schedule.period'] != null ? comProperties['buildingenv.schedule.period'] : 60000 }" 		      
+			  initial-delay="#{comProperties['buildingenv.schedule.initialDelay'] != null ? comProperties['buildingenv.schedule.initialDelay'] : 3500 }"/>
+
+		<task:scheduled ref="moduleExecutor" method="computerRoomEnvExecute" 
+		      fixed-delay="#{comProperties['buildingenv.schedule.period'] != null ? comProperties['buildingenv.schedule.period'] : 60000 }" 		      
+			  initial-delay="#{comProperties['buildingenv.schedule.initialDelay'] != null ? comProperties['buildingenv.schedule.initialDelay'] : 3500 }"/>
 
 
 	</task:scheduled-tasks>

@@ -64,7 +64,7 @@ public class AccessInfoService extends AbstractAgentService{
 			sendAccessDoorMessage (accessDoor);
 		}
 		
-		long alarmTo = 0 ;
+		long alarmTo = this.lastIngestTime ;
 		List<AccessAlarm> accessAlarmList = getAccessAlarmList();
 		logger.debug("getAccessAlarmList count : [{}]" , accessAlarmList.size() );
 		for (AccessAlarm accessAlarm : accessAlarmList ) {
@@ -72,7 +72,7 @@ public class AccessInfoService extends AbstractAgentService{
 			alarmTo = alarmTo < accessAlarm.getAlarmEventTime().getTime() ? accessAlarm.getAlarmEventTime().getTime() : alarmTo ;
 		}
 		
-		long cardTo = 0 ;
+		long cardTo = this.lastIngestTime ;
 		List<AccessCard> accessCardList = getAccessCardList();
 		logger.debug("getAccessCardList count : [{}]" , accessCardList.size() );
 		for (AccessCard accessCard : accessCardList ) {
@@ -80,11 +80,8 @@ public class AccessInfoService extends AbstractAgentService{
 			cardTo = cardTo < accessCard.getCardEventTime().getTime() ? accessCard.getCardEventTime().getTime() : cardTo ;
 		}
 		
-		long to = alarmTo < cardTo ? alarmTo : cardTo ;		
+		long to = alarmTo < cardTo ? cardTo : alarmTo;		
 		
-		if(to==0) {
-			to = System.currentTimeMillis() ;
-		}
 		try {
 			this.lastIngestTime = to ;
 			savePropertiesSet();
@@ -209,18 +206,13 @@ public class AccessInfoService extends AbstractAgentService{
 				}
 			}
 			
-			devicedSendLoop(edgeThingList, addThingList) ;
+			devicedSendLoop(edgeThingList, addThingList, EDGE_MODEL_NAME.length()) ;
 			
 			thingList.addAll(addThingList);
 			setPropertiesValue( file , PROPERTIES_THINGLIST_KEY , JsonUtil.toJson(thingList) );
 			
 		}
 		
-	}
-	
-	@Override
-	protected String getEdgeModelName() {
-		return EDGE_MODEL_NAME;
 	}
 
 	private String getEdgeThingName(int conTerminalInnerId) {

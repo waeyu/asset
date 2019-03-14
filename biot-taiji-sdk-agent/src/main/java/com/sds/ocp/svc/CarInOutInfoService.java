@@ -42,15 +42,12 @@ public class CarInOutInfoService extends AbstractAgentService{
 	
 	public void action() {
 
-		long to = 0 ;
+		long to = this.lastIngestTime ;
 		List<CarInOutInfo> carInOutInfoList = getList();
 		logger.debug("getlist count : [{}]" , carInOutInfoList.size() );
 		for (CarInOutInfo carInOutInfo : carInOutInfoList) {
 			sendMessage (carInOutInfo);
 			to = to < carInOutInfo.getCrdtm().getTime() ? carInOutInfo.getCrdtm().getTime() : to ;
-		}
-		if(to==0) {
-			to = System.currentTimeMillis() ;
 		}
 		try {
 			this.lastIngestTime = to ;

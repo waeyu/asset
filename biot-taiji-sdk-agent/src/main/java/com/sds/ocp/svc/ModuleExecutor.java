@@ -20,6 +20,12 @@ public class ModuleExecutor {
 	
 	@Autowired
 	private VisionService visionService;
+	
+	@Autowired
+	private BuildingEnvService buildingEnvService;
+	
+	@Autowired
+	private ComputerRoomEnvService computerRoomEnvService;
     
     public void visitorExecute() {    	
     	visitorInfoService.action();
@@ -40,5 +46,15 @@ public class ModuleExecutor {
     public void visionExecute() {    	
     	visionService.action();
     }
+    
+    public void buildingEnvExecute() {    	
+    	buildingEnvService.action();
+    }
+
+
+    public void computerRoomEnvExecute() {    	
+    	computerRoomEnvService.action();
+    }    
+    
 
 }

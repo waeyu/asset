@@ -42,15 +42,12 @@ public class VisitorInfoService extends AbstractAgentService{
 	
 	public void action() {
 
-		long to = 0 ;
+		long to = this.lastIngestTime ;
 		List<VisitorInfo> visitorInfoList = getList();
 		logger.debug("getlist count : [{}]" , visitorInfoList.size() );
 		for (VisitorInfo visitorInfo : visitorInfoList) {
 			sendMessage (visitorInfo);
 			to = to < visitorInfo.getOperDt().getTime() ? visitorInfo.getOperDt().getTime() : to ;
-		}
-		if(to==0) {
-			to = System.currentTimeMillis() ;
 		}
 		try {
 			this.lastIngestTime = to ;

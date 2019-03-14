@@ -227,7 +227,7 @@ public abstract class AbstractAgentService {
 
 	}
 	
-	protected void devicedSendLoop(List<ReqEdgeThing> edgeThingList, List<Object> addThingList) {
+	protected void devicedSendLoop(List<ReqEdgeThing> edgeThingList, List<Object> addThingList, int edgeModelNameLen ) {
 		
 		while(!edgeThingList.isEmpty()) {
 			logger.debug( "edgeThingList count is {}" , edgeThingList.size() );
@@ -243,17 +243,17 @@ public abstract class AbstractAgentService {
 						break;
 					}
 				}
-				devidedSend(devidedEdgeThingList, addThingList);
+				devidedSend(devidedEdgeThingList, addThingList,edgeModelNameLen);
 			}
 			else {
-				devidedSend(edgeThingList, addThingList);
+				devidedSend(edgeThingList, addThingList,edgeModelNameLen);
 				break;
 			}
 			
 		}		
 	}	
 	
-	private void devidedSend(List<ReqEdgeThing> edgeThingList, List<Object> addThingList) {
+	private void devidedSend(List<ReqEdgeThing> edgeThingList, List<Object> addThingList, int edgeModelNameLen ) {
 		
 		ReqEdgeThingBulk reqEdgeThingBulk = new ReqEdgeThingBulk();
 		reqEdgeThingBulk.setThings(edgeThingList);
@@ -262,8 +262,8 @@ public abstract class AbstractAgentService {
 		if( failList!=null && failList.size()>0 ) {					
 			logger.info("failList count:{}.", failList.size() );
 			for( String thingName : failList ) {
-				if(thingName.length() > this.getEdgeModelName().length()+1 ) {
-					String uniqueNum = thingName.substring(this.getEdgeModelName().length()+1);
+				if(thingName.length() > edgeModelNameLen+1 ) {
+					String uniqueNum = thingName.substring(edgeModelNameLen+1);
 					addThingList.remove(uniqueNum);
 				}
 				else {
@@ -273,10 +273,6 @@ public abstract class AbstractAgentService {
 			}
 		}
 		
-	}
-	
-	protected String getEdgeModelName() {
-		return "";
 	}
 	
 	private Map<String, Object> makeBasicAuthHeaders() {

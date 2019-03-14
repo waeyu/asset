@@ -116,7 +116,7 @@ public class VisionService extends AbstractAgentService{
 				}
 			}
 			
-			devicedSendLoop(edgeThingList, addThingList) ;
+			devicedSendLoop(edgeThingList, addThingList, EDGE_MODEL_NAME.length() ) ;
 			
 			thingList.addAll(addThingList);
 			setPropertiesValue( file , PROPERTIES_THINGLIST_KEY , JsonUtil.toJson(thingList) );
@@ -127,11 +127,6 @@ public class VisionService extends AbstractAgentService{
 	
 	private String getEdgeThingName(String pid) {
 		return EDGE_MODEL_NAME + "." + String.valueOf(pid);
-	}
-	
-	@Override
-	protected String getEdgeModelName() {
-		return EDGE_MODEL_NAME;
 	}
 
 }
