@@ -63,6 +63,8 @@ public abstract class AbstractAgentService {
 	protected long lastIngestTime;
 	
 	protected String searchParamFileName;
+	
+	private long waitMiliSecond;
 
 	@Value("#{comProperties['openapi.baseurl'] != null ? comProperties['openapi.baseurl'] : 'http://local.insator.io:8088' }")
 	public void setBaseUrl(String baseUrl) {
@@ -105,6 +107,11 @@ public abstract class AbstractAgentService {
 		this.period = period;
 	}
 	
+	@Value("#{comProperties['schedule.waitMiliSecond'] != null ? comProperties['schedule.waitMiliSecond'] : 3000 }")	
+	public void setWaitMiliSecond(long waitMiliSecond) {
+		this.waitMiliSecond = waitMiliSecond;
+	}
+
 	@Autowired	
 	public void setHttpConnection(HttpConnection httpConnection) {
 		this.httpConnection = httpConnection;
@@ -159,6 +166,8 @@ public abstract class AbstractAgentService {
 	    // 4. connect with authentication-info.
 	    try {
 			this.connectManager.connectThing(siteId, thingName, authVo);
+			IotActionCallback userCallback = new IotActionCallback(this.siteId,this.thingName,this.waitMiliSecond);
+			this.connectManager.setUserActionCallback(userCallback);
 		} catch (Exception e) {
 			throw new OcpException("fail to connect.");
 		}
@@ -169,7 +178,10 @@ public abstract class AbstractAgentService {
 
 	protected void sendAttrMessage(JsonObject message, long msgDate) {
 	    try {
-			this.connectManager.sendMessage( message , "Basic-AttrGroup" , msgDate );
+			String ret = this.connectManager.sendMessage( message , "Basic-AttrGroup" , msgDate );
+			if(ret==null) {
+				throw new OcpException("Fail to send message. return is null.");
+			}
 			logger.debug("Send message msgDate:[{}] body:{}" , new Timestamp(msgDate) , message.toString() );
 		} catch (Exception e) {
 			logger.error("Fail to send message." , e );
@@ -183,7 +195,10 @@ public abstract class AbstractAgentService {
 	
 	protected void sendEdgeUserMessage(String edgeThingName, String userMessageCode , JsonObject message , long msgDate) {
 	    try {
-			this.connectManager.sendEdgeMessage( edgeThingName, message , userMessageCode , msgDate );
+			String ret = this.connectManager.sendEdgeMessage( edgeThingName, message , userMessageCode , msgDate );
+			if(ret==null) {
+				throw new OcpException("sendEdgeMessage fail. return is null.");
+			}
 			logger.debug("Send message[{}] msgDate:[{}] body:{}" , userMessageCode , new Timestamp(msgDate) , message.toString() );
 		} catch (Exception e) {
 			logger.error("Fail to send message. [{}/{}]" , edgeThingName, userMessageCode , e );

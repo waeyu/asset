@@ -1,10 +1,14 @@
 package com.sds.ocp.svc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("moduleExecutor")
 public class ModuleExecutor {
+	
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	private VisitorInfoService visitorInfoService;
@@ -28,32 +32,67 @@ public class ModuleExecutor {
 	private ComputerRoomEnvService computerRoomEnvService;
     
     public void visitorExecute() {    	
-    	visitorInfoService.action();
+    	try {
+    		visitorInfoService.action();
+    	}
+    	catch ( Exception e) {
+    		logger.error("visitorInfoService.action() fail.",e);
+    	}
     }
     
     public void consumptionExecute() {    	
-    	consumptionInfoService.action();
+    	try {
+    		consumptionInfoService.action();
+    	}
+    	catch ( Exception e) {
+    		logger.error("consumptionInfoService.action() fail.",e);
+    	}
     }
     
-    public void accessExecute() {    	
-    	accessInfoService.action();
+    public void accessExecute() {    
+    	try {
+    		accessInfoService.action();
+		}
+		catch ( Exception e) {
+			logger.error("accessInfoService.action() fail.",e);
+		}
     }
     
     public void carInOutExecute() {    	
-    	carInOutInfoService.action();
+    	try { 
+    		carInOutInfoService.action();
+		}
+		catch ( Exception e) {
+			logger.error("carInOutInfoService.action() fail.",e);
+		}
     }
     
     public void visionExecute() {    	
-    	visionService.action();
+    	try {
+	    	visionService.action();
+		}
+		catch ( Exception e) {
+			logger.error("visionService.action() fail.",e);
+		}
     }
     
     public void buildingEnvExecute() {    	
-    	buildingEnvService.action();
+    	try {
+    		buildingEnvService.action();
+		}
+		catch ( Exception e) {
+			logger.error("buildingEnvService.action() fail.",e);
+		}
     }
 
 
     public void computerRoomEnvExecute() {    	
-    	computerRoomEnvService.action();
+    	try {
+    		computerRoomEnvService.action();
+		}
+		catch ( Exception e) {
+			logger.error("computerRoomEnvService.action() fail.",e);
+		}
     }    
     
 
