@@ -25,27 +25,33 @@ public class IotActionCallback implements IIotActionCallback{
 	}
 
 	public void onServerRequest(IotConnectManager thing, MomMessageVO arrivedMessage) {
-		logger.debug("onServerRequest {} " , arrivedMessage.getData().toString());				
+		if(logger.isDebugEnabled() && arrivedMessage!=null && arrivedMessage.getData() != null)
+			logger.debug("onServerRequest {} " , arrivedMessage.getData().toString());				
 	}
 
 	public void onNotification(IotConnectManager thing, MomMessageVO arrivedMessage) {
-		logger.debug("onNotification {} " , arrivedMessage.getData().toString());				
+		if(logger.isDebugEnabled() && arrivedMessage!=null && arrivedMessage.getData() != null)
+			logger.debug("onNotification {} " , arrivedMessage.getData().toString());				
 	}
 
 	public void onArrivedAnswer(IotConnectManager thing, MomMessageVO arrivedMessage) {
-		logger.debug("onArrivedAnswer {} " , arrivedMessage.getData().toString());					
+		if(logger.isDebugEnabled() && arrivedMessage!=null && arrivedMessage.getData() != null)
+			logger.debug("onArrivedAnswer {} " , arrivedMessage.getData().toString());					
 	}
 
 	public void onFirmwareUpdateAlarm(IotConnectManager thing, MomMessageVO arrivedMessage) {
-		logger.debug("onFirmwareUpdateAlarm {} " , arrivedMessage.getData().toString());		
+		if(logger.isDebugEnabled() && arrivedMessage!=null && arrivedMessage.getData() != null)
+			logger.debug("onFirmwareUpdateAlarm {} " , arrivedMessage.getData().toString());		
 	}
 
 	public void onFirmwareRecentVersionResponse(IotConnectManager thing, MomMessageVO arrivedMessage) {
-		logger.debug("onFirmwareRecentVersionResponse {} " , arrivedMessage.getData().toString());		
+		if(logger.isDebugEnabled() && arrivedMessage!=null && arrivedMessage.getData() != null)
+			logger.debug("onFirmwareRecentVersionResponse {} " , arrivedMessage.getData().toString());		
 	}
 
 	public void onProvisioningMessage(IotConnectManager thing, MomMessageVO arrivedMessage) {
-		logger.debug("onFirmwareRecentVersionResponse {} " , arrivedMessage.getData().toString());		
+		if(logger.isDebugEnabled() && arrivedMessage!=null && arrivedMessage.getData() != null)
+			logger.debug("onFirmwareRecentVersionResponse {} " , arrivedMessage.getData().toString());		
 	}
 
 	public void onConnectionLost(IotConnectManager connectManager) {

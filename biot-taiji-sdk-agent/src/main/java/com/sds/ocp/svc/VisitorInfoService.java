@@ -73,6 +73,7 @@ public class VisitorInfoService extends AbstractAgentService{
 	    JsonObject message = new JsonObject();
 	    message.addProperty("orderCode", visitorInfo.getOrderCode());
 	    message.addProperty("operDt", DateUtil.getTimeString(visitorInfo.getOperDt().getTime()));
+	    message.addProperty("operDtLong", visitorInfo.getOperDt().getTime() );
 	    
 	    sendAttrMessage(message,visitorInfo.getOperDt().getTime());
 

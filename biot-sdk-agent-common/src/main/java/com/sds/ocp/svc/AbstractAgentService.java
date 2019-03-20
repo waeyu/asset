@@ -39,6 +39,8 @@ public abstract class AbstractAgentService {
 	
 	protected static final String SEARCH_PARAM_KEY   = "lastIngestTimeStr";
 	protected static final int    MAX_COUNT_BULK_EDGE_REGISTER    = 100;
+	
+	public static final String PROPERTIES_DIR = "conf" ;
 
 	private String baseUrl;
 	private String userId;
@@ -229,7 +231,7 @@ public abstract class AbstractAgentService {
 	
 	protected void initSearchParameter() {
 		
-		this.searchParamPropertiesFile = PropertiesUtil.getPropertiesFile( this.searchParamFileName );
+		this.searchParamPropertiesFile = PropertiesUtil.getPropertiesFile( PROPERTIES_DIR , this.searchParamFileName );
 		
 		String lastIngestTimeStr = getPropertiesValue( this.searchParamPropertiesFile , this.searchParamFileName , SEARCH_PARAM_KEY );
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd 
+		http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util.xsd ">
+
+	<!-- Annotation 패키지 지정 필수 -->
+	<context:component-scan base-package="com.sds.ocp.third" use-default-filters="true" />
+
+	<util:properties id="taijiBeanProperties" location="classpath:biot_taiji_bean.conf" />
+	 
+	<bean id="ecc_dataSource" class="com.sds.ocp.third.comm.SecuredDataSource" init-method="getConnection" destroy-method="close"> 
+		<property name="driverClassName" value="#{taijiBeanProperties['jdbc.driverClass']}" /> 
+		<property name="url" value="#{taijiBeanProperties['jdbc.url']}"/>
+		<property name="username" value="#{taijiBeanProperties['jdbc.user']}"/>
+		<property name="password" value="#{taijiBeanProperties['jdbc.password']}"/>
+				
+		<property name="defaultAutoCommit" value="#{taijiBeanProperties['jdbc.defaultAutoCommit'] != null ? taijiBeanProperties['jdbc.defaultAutoCommit'] : true }"/>
+		<property name="poolPreparedStatements" value="true"/>
+		<property name="maxOpenPreparedStatements" value="30"/>
+		<property name="maxActive" value="#{taijiBeanProperties['jdbc.maxActive'] != null ? taijiBeanProperties['jdbc.maxActive'] : 10 }" />
+		<property name="maxIdle"   value="#{taijiBeanProperties['jdbc.maxIdle'] != null ? taijiBeanProperties['jdbc.maxIdle'] : 10 }" />
+		<property name="minIdle"  value="#{taijiBeanProperties['jdbc.minIdle'] != null ? taijiBeanProperties['jdbc.minIdle'] : 3 }" />
+		<property name="maxWait" value="#{taijiBeanProperties['jdbc.maxWait'] != null ? taijiBeanProperties['jdbc.maxWait'] : 500 }" />
+		<property name="removeAbandoned" value="true"/>
+		<property name="removeAbandonedTimeout" value="#{taijiBeanProperties['jdbc.removeAbandonedTimeout'] != null ? taijiBeanProperties['jdbc.removeAbandonedTimeout'] : 5 }" />
+        <property name="testWhileIdle"          value="true"/>
+        <property name="timeBetweenEvictionRunsMillis" value="#{taijiBeanProperties['jdbc.timeBetweenEvictionRunsMillis'] != null ? taijiBeanProperties['jdbc.timeBetweenEvictionRunsMillis'] : 600000 }" />
+	</bean>	 
+
+    <bean id="ecc_txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="ecc_dataSource"/>
+	</bean>
+
+</beans>

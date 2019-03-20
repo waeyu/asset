@@ -83,7 +83,7 @@ public class VisionService extends AbstractAgentService{
 		
 		logger.debug("addEdgeThings begin.");
 		
-		File file =  PropertiesUtil.getPropertiesFile( PROPERTIES_THINGLIST_FILE_NAME );
+		File file =  PropertiesUtil.getPropertiesFile( PROPERTIES_DIR , PROPERTIES_THINGLIST_FILE_NAME );
 		
 		String thingListStr = getPropertiesValue( file , PROPERTIES_THINGLIST_FILE_NAME , PROPERTIES_THINGLIST_KEY );
 		List<Object> thingList = null;

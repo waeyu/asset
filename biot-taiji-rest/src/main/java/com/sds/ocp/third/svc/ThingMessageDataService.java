@@ -1,5 +1,6 @@
 package com.sds.ocp.third.svc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -20,14 +21,22 @@ public class ThingMessageDataService {
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@Autowired
+
 	private ThingMessageDataDAO thingMessageDataDAO;
-	
-	@Autowired
 	private ThingMDataDAO thingMDataDAO;
 	
 	
-	public List<ThingMsgDataOut> getThingMsgData(ThingMsgDataIn thingMsgDataIn){
+	@Autowired
+	public void setThingMessageDataDAO(ThingMessageDataDAO thingMessageDataDAO) {
+		this.thingMessageDataDAO = thingMessageDataDAO;
+	}
+
+	@Autowired
+	public void setThingMDataDAO(ThingMDataDAO thingMDataDAO) {
+		this.thingMDataDAO = thingMDataDAO;
+	}
+	
+	public List<ThingMsgDataOut> getThingMsgData(ThingMsgDataIn thingMsgDataIn , boolean isRegister ){
 		
 		if (logger.isDebugEnabled()) {
 			logger.debug("getThingMsgData begin.");
@@ -38,16 +47,29 @@ public class ThingMessageDataService {
 			throw new OcpException(StatusEnum.BAD_REQUEST, "site is not exist." );
 		}
 		
-		List<String> thingNameList = thingMDataDAO.listThingName(thingMsgDataIn.getThingModelName(), siteId);		
-		if (thingNameList.isEmpty()) {
-			throw new OcpException(StatusEnum.BAD_REQUEST, "Thing list is not exist." );
-		}	
-		if (logger.isDebugEnabled()) {
-			logger.debug("thingNameList count is {} ", thingNameList.size() );
+		List<String> thingNameList = null;
+		if(StringUtil.isEmpty(thingMsgDataIn.getThingName())) {
+			thingNameList = thingMDataDAO.listThingName(thingMsgDataIn.getThingModelName(), siteId);		
+			if (thingNameList.isEmpty()) {
+				throw new OcpException(StatusEnum.BAD_REQUEST, "Thing list is not exist." );
+			}	
+			if (logger.isDebugEnabled()) {
+				logger.debug("thingNameList count is {} ", thingNameList.size() );
+			}
+		}
+		else {
+			thingNameList = new ArrayList<String>();
+			thingNameList.add(thingMsgDataIn.getThingName());
 		}
 		
 		try {
-			List<ThingMsgDataOut> thingMsgDataOut = thingMessageDataDAO.listThingMsgData(thingMsgDataIn, siteId , thingNameList);
+			List<ThingMsgDataOut> thingMsgDataOut = null ;
+			if( isRegister ) {
+				thingMsgDataOut = thingMessageDataDAO.listThingMsgDataRegister(thingMsgDataIn, siteId , thingNameList);
+			}
+			else {
+				thingMsgDataOut = thingMessageDataDAO.listThingMsgData(thingMsgDataIn, siteId , thingNameList);
+			}
 			if(thingMsgDataOut.isEmpty()) {
 				throw new OcpException(StatusEnum.NOT_FOUND , "data is not found." );
 			}

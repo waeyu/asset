@@ -5,12 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.sds.ocp</groupId>
-	<artifactId>biot-taiji-rest</artifactId>
+	<artifactId>biot-taiji-bean</artifactId>
 	<version>0.9</version>
 	<packaging>jar</packaging>
 
-	<name>Made For Taiji</name>
-	<description>Useful Rest API For Taiji Poc</description>
+	<name>Made For Taiji Bean</name>
+	<description>Useful Bean For Taiji Poc</description>
 
 	<properties>
 		<!-- OCP VERSION -->
@@ -67,7 +67,7 @@
 	</dependencies>
 
 	<build>
-
+	
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

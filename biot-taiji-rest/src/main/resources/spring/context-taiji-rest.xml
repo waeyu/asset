@@ -12,8 +12,7 @@
 	<!-- Annotation 패키지 지정 필수 -->
 	<context:component-scan base-package="com.sds.ocp.third" use-default-filters="true" />
 
-	<!-- 아래와 같은 방식으로 자체 설정파일 사용 가능
-	<util:properties id="sampleProperties" location="classpath:ocp_common_custom_rest.conf" />
-	 -->
+	<util:properties id="taijiRestProperties" location="classpath:biot_taiji_rest.conf" />
+
 
 </beans>

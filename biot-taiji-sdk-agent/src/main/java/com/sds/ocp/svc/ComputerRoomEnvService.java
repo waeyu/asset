@@ -148,7 +148,7 @@ public class ComputerRoomEnvService extends AbstractAgentService{
 	    message.addProperty("detectCurrent", leakDetection.getDetectCurrent()  );	 
 	    message.addProperty("rhOhm", leakDetection.getRhOhm() );	 
 	    
-	    sendEdgeAttrMessage( getEdgeThingName(leakDetection.getDeviceCode() ) , message , leakDetection.getHisDate().getTime() );
+	    sendEdgeAttrMessage( getEdgeThingName2(leakDetection.getDeviceCode() ) , message , leakDetection.getHisDate().getTime() );
 
 	}
 	
@@ -170,7 +170,7 @@ public class ComputerRoomEnvService extends AbstractAgentService{
 		
 		logger.debug("addEdgeThings begin.");
 		
-		File file =  PropertiesUtil.getPropertiesFile( PROPERTIES_THINGLIST_FILE_NAME );
+		File file =  PropertiesUtil.getPropertiesFile( PROPERTIES_DIR, PROPERTIES_THINGLIST_FILE_NAME );
 		
 		String thingListStr = getPropertiesValue( file , PROPERTIES_THINGLIST_FILE_NAME , PROPERTIES_THINGLIST_KEY );
 		List<Object> thingList = null;

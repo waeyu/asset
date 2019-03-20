@@ -74,10 +74,12 @@ public class BuildingEnvDAO extends AbstractDAO {
 		query.append("   SUM ( CASE WHEN HisTag = 'voc' THEN  HisValue END ) AS \"voc\" , " ); 	
 		query.append("   SUM ( CASE WHEN HisTag = 'PM25' THEN  HisValue END ) AS \"pm25\" , " ); 	
 		query.append("   SUM ( CASE WHEN HisTag = 'noise' THEN  HisValue END ) AS \"noise\" " ); 	
-		query.append("  FROM ( SELECT HisFTag , HisDate , HisTag , CONVERT ( float , HisValue ) HisValue ");
+		query.append("  FROM ( SELECT HisFTag , HisDate , HisTag , max( CONVERT ( float , HisValue ) ) HisValue ");
 		query.append("           FROM ibms_TDataHistory ");
 		query.append("          WHERE LEN(HisValue) > 0  ");
-		query.append("          AND   HisDate > :from AND HisDate <= :to ) as t ");
+		query.append("          AND   HisDate > :from  ");
+		query.append("          AND   HisDate <= :to  ");
+		query.append("          GROUP BY HisFTag , HisDate , HisTag ) as t ");
 		query.append(" GROUP BY HisFTag , HisDate ");
 		
 		Map<String, Object> param = new HashMap<>();

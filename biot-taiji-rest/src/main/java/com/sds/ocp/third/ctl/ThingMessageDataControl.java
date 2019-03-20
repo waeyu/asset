@@ -21,6 +21,7 @@ import com.sds.ocp.common.exception.OcpException;
 import com.sds.ocp.common.msg.StatusEnum;
 import com.sds.ocp.common.util.DateParseUtil;
 import com.sds.ocp.common.util.DateUtil;
+import com.sds.ocp.common.util.StringUtil;
 import com.sds.ocp.third.ctl.vo.ThingMsgData;
 import com.sds.ocp.third.svc.ThingMessageDataService;
 import com.sds.ocp.third.svc.vo.ThingMsgDataIn;
@@ -31,21 +32,25 @@ public class ThingMessageDataControl {
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	private final static String DATE_PATTERN_FORMAT = "yyyy-MM-dd HH:mm:ss";
-	
-	@Autowired
+	public final static String DATE_PATTERN_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
 	private ThingMessageDataService thingMessageDataService;
 	
+	@Autowired
+	public void setThingMessageDataService(ThingMessageDataService thingMessageDataService) {
+		this.thingMessageDataService = thingMessageDataService;
+	}
+
 	@AssetMapping(value = "/v0.9/thingMsgDataFromTo/thingModelNames/{thingModelName}/userMessages/{userMessageCode}", method = RequestMethod.GET)
 	@Asset(moduleId="rest_service", reqMsgCode = "MSGTHD000001", resMsgCode = "MSGTHD000002", tag = "Thing Message Data")
 	public List<ThingMsgData> getThingMsgDataFromTo(
 			@PathVariable @AssetParam("thingModelName (e.g. Ensensor , DoorSensor )") String thingModelName,
 			@PathVariable @AssetParam("userMessageCode (e.g. Basic-AttrGroup)") String userMessageCode,
 			@RequestParam(required = true) @AssetParam("siteCode ( e.g. ECC , SDSC )") String siteCode ,
+			@RequestParam(required = true) @AssetParam("thingName ( e.g. Ensensor.ensensor-f1104 )") String thingName ,
 			@RequestParam(required = true) @AssetParam("timeZoneId ( e.g. GMT-08:00 , GMT+08:00 , GMT+00:00 )") String timeZoneId ,
 			@RequestParam(required = true) @AssetParam("start time for search, \"yyyy-MM-dd HH:mm:ss\"") String timeFrom,
-			@RequestParam(required = true) @AssetParam("end time for search, \"yyyy-MM-dd HH:mm:ss\"") String timeTo,
-			@RequestParam(required = false) @AssetParam("true if you want result of recent search first(default:true)") Boolean latestFirst ) {
+			@RequestParam(required = true) @AssetParam("end time for search, \"yyyy-MM-dd HH:mm:ss\"") String timeTo  ) {
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("### getThingMsgDataFromTo begin.");
@@ -83,11 +88,13 @@ public class ThingMessageDataControl {
 		thingMsgDataIn.setThingModelName(thingModelName);
 		thingMsgDataIn.setUserMessageCode(userMessageCode);
 		thingMsgDataIn.setSiteCode(siteCode);
+		if(!StringUtil.isEmpty(thingName)) {
+			thingMsgDataIn.setThingName(thingName);
+		}
 		thingMsgDataIn.setFromDate(fromDate);
 		thingMsgDataIn.setToDate(toDate);
-		thingMsgDataIn.setLatestFirst(latestFirst);
 		
-		List<ThingMsgDataOut> thingMsgDataOutList = thingMessageDataService.getThingMsgData(thingMsgDataIn);
+		List<ThingMsgDataOut> thingMsgDataOutList = thingMessageDataService.getThingMsgData(thingMsgDataIn,false);
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("thingMsgDataOutList count is {} ", thingMsgDataOutList.size() );
@@ -103,9 +110,9 @@ public class ThingMessageDataControl {
 			@PathVariable @AssetParam("thingModelName (e.g. Ensensor , DoorSensor )") String thingModelName,
 			@PathVariable @AssetParam("userMessageCode (e.g. Basic-AttrGroup)") String userMessageCode,
 			@RequestParam(required = true) @AssetParam("siteCode ( e.g. ECC , SDSC )") String siteCode ,
+			@RequestParam(required = true) @AssetParam("thingName ( e.g. Ensensor.ensensor-f1104 )") String thingName ,
 			@RequestParam(required = false) @AssetParam("timeZoneId ( e.g. GMT-08:00 , GMT+08:00 , GMT+00:00 )") String timeZoneId ,
-			@RequestParam(required = false) @AssetParam("before ( e.g. 10(10second) , 3(3second) )") Integer before ,
-			@RequestParam(required = false) @AssetParam("true if you want result of recent search first(default:true)") Boolean latestFirst ) {
+			@RequestParam(required = false) @AssetParam("before ( e.g. 10(10second) , 3(3second) )") Integer before  ) {
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("### getThingMsgDataBefore");
@@ -144,17 +151,19 @@ public class ThingMessageDataControl {
 		thingMsgDataIn.setThingModelName(thingModelName);
 		thingMsgDataIn.setUserMessageCode(userMessageCode);
 		thingMsgDataIn.setSiteCode(siteCode);
+		if(!StringUtil.isEmpty(thingName)) {
+			thingMsgDataIn.setThingName(thingName);
+		}
 		thingMsgDataIn.setFromDate(fromDate);
 		thingMsgDataIn.setToDate(toDate);
-		thingMsgDataIn.setLatestFirst(latestFirst);
 		
-		List<ThingMsgDataOut> thingMsgDataOutList = thingMessageDataService.getThingMsgData(thingMsgDataIn);		
+		List<ThingMsgDataOut> thingMsgDataOutList = thingMessageDataService.getThingMsgData(thingMsgDataIn,true);		
 		
 		if (logger.isDebugEnabled()) {
 			logger.debug("thingMsgDataOutList count is {} ", thingMsgDataOutList.size() );
 		}
 
-		return convertThingMsgData(thingMsgDataIn, thingMsgDataOutList,timeZone);
+		return convertThingMsgData(thingMsgDataIn, thingMsgDataOutList , timeZone);
 	}
 	
 	private List<ThingMsgData> convertThingMsgData(ThingMsgDataIn thingMsgDataIn, List<ThingMsgDataOut> thingMsgDataOutList, TimeZone timeZone ) {

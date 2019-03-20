@@ -13,12 +13,12 @@ import org.springframework.util.ResourceUtils;
 
 public class PropertiesUtil {
 	
-	public static File getPropertiesFile(String path) {
+	public static File getPropertiesFile(String dir , String fileName ) {
+		String path = dir + File.separator + fileName;
 		try {
 			return ResourceUtils.getFile(path);
 		}
 		catch (IOException e) {
-			e.printStackTrace();
 			File file = new File(path);
 			return file;
 		}

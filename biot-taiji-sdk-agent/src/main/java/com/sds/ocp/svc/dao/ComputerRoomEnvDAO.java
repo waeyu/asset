@@ -98,11 +98,12 @@ public class ComputerRoomEnvDAO extends AbstractDAO {
 		query.append("   SUM ( CASE WHEN HisTag = 'NEPT' THEN  HisValue END ) AS \"nept\" , " ); 	
 		query.append("   SUM ( CASE WHEN HisTag = 'PEQT' THEN  HisValue END ) AS \"peqt\" , " ); 	
 		query.append("   SUM ( CASE WHEN HisTag = 'NEQT' THEN  HisValue END ) AS \"neqt\" " ); 	
-		query.append("  FROM ( SELECT HisFTag , HisDate , HisTag , CONVERT ( float , HisValue ) HisValue ");
+		query.append("  FROM ( SELECT HisFTag , HisDate , HisTag ,  MAX ( CONVERT ( float , HisValue ) ) HisValue ");
 		query.append("           FROM dcms_TDataHistory ");
 		query.append("          WHERE LEN(HisValue) > 0  ");
 		query.append("          AND   HisFTag LIKE 'elect%'  ");
-		query.append("          AND   HisDate > :from AND HisDate <= :to ) as t ");
+		query.append("          AND   HisDate > :from AND HisDate <= :to  ");
+		query.append("          GROUP BY HisFTag , HisDate , HisTag ) as t ");
 		query.append(" GROUP BY HisFTag , HisDate ");
 		
 		Map<String, Object> param = new HashMap<>();
@@ -169,11 +170,12 @@ public class ComputerRoomEnvDAO extends AbstractDAO {
 		query.append("   SUM ( CASE WHEN HisTag = 'detectohm' THEN  HisValue END ) AS \"detectOhm\" , " ); 		
 		query.append("   SUM ( CASE WHEN HisTag = 'detectcurrent' THEN  HisValue END ) AS \"detectCurrent\" , " ); 	
 		query.append("   SUM ( CASE WHEN HisTag = 'rhohm' THEN  HisValue END ) AS \"rhOhm\" " ); 	
-		query.append("  FROM ( SELECT HisFTag , HisDate , HisTag , CONVERT ( float , HisValue ) HisValue ");
+		query.append("  FROM ( SELECT HisFTag , HisDate , HisTag , MAX ( CONVERT ( float , HisValue ) ) HisValue ");
 		query.append("           FROM dcms_TDataHistory ");
 		query.append("          WHERE LEN(HisValue) > 0  ");
 		query.append("          AND   HisFTag LIKE 'leakdect%'  ");
-		query.append("          AND   HisDate > :from AND HisDate <= :to ) as t ");
+		query.append("          AND   HisDate > :from AND HisDate <= :to  ");
+		query.append("          GROUP BY HisFTag , HisDate , HisTag ) as t ");
 		query.append(" GROUP BY HisFTag , HisDate ");
 		
 		Map<String, Object> param = new HashMap<>();

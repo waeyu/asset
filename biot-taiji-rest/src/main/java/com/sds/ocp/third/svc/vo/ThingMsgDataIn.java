@@ -4,17 +4,17 @@ import java.util.Date;
 
 public class ThingMsgDataIn {
 	
-	private String thingModelName;
+	private String thingModelName = null;
 	
-	private String userMessageCode;
+	private String userMessageCode = null;
 	
-	private String siteCode;
+	private String siteCode = null;
+	
+	private String thingName = null;
 
-	private Date fromDate;
+	private Date fromDate = null;
 	
-	private Date toDate;
-	
-	private Boolean latestFirst;
+	private Date toDate = null;
 
 	public String getThingModelName() {
 		return thingModelName;
@@ -39,13 +39,13 @@ public class ThingMsgDataIn {
 	public void setSiteCode(String siteCode) {
 		this.siteCode = siteCode;
 	}
-
-	public Boolean getLatestFirst() {
-		return latestFirst;
+	
+	public String getThingName() {
+		return thingName;
 	}
 
-	public void setLatestFirst(Boolean latestFirst) {
-		this.latestFirst = latestFirst;
+	public void setThingName(String thingName) {
+		this.thingName = thingName;
 	}
 
 	public Date getFromDate() {
@@ -67,8 +67,8 @@ public class ThingMsgDataIn {
 	@Override
 	public String toString() {
 		return "ThingMsgDataIn [thingModelName=" + thingModelName + ", userMessageCode=" + userMessageCode
-				+ ", siteCode=" + siteCode + ", fromDate=" + fromDate + ", toDate=" + toDate + ", latestFirst="
-				+ latestFirst + "]";
+				+ ", siteCode=" + siteCode + ", thingName=" + thingName + ", fromDate=" + fromDate + ", toDate="
+				+ toDate + "]";
 	}
 	
 }
