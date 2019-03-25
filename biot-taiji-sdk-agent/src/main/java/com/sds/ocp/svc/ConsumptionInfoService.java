@@ -4,6 +4,7 @@ import java.io.File;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -57,13 +58,16 @@ public class ConsumptionInfoService extends AbstractAgentService{
 		logger.debug("action begin.");
 		long to = this.lastIngestTime ;
 		List<ConsumptionInfo> consumptionInfoList = getList();
-		logger.debug("getlist count : [{}]" , consumptionInfoList.size() );
+		logger.info("consumptionInfoList count : [{}]" , consumptionInfoList.size() );
 		for (ConsumptionInfo consumptionInfo : consumptionInfoList ) {
 			sendMessage (consumptionInfo);
 			to = to < consumptionInfo.getConDatetime().getTime() ? consumptionInfo.getConDatetime().getTime() : to ;
 		}
 		try {
 			this.lastIngestTime = to ;
+			if( DateUtil.isDataIssue(this.lastIngestTime, TimeZone.getDefault()) ) {
+				logger.warn("Data collection time is more than 2 hours. last collection time[{}] " , new Timestamp(this.lastIngestTime));
+			}
 			savePropertiesSet();
 		} catch (Exception e) {
 			logger.error("savePropertiesSet fail.",e);

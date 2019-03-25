@@ -4,6 +4,7 @@ import java.io.File;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -58,7 +59,7 @@ public class ComputerRoomEnvService extends AbstractAgentService{
 		
 		long powerMeterTo = this.lastIngestTime ;
 		List<PowerMeter> powerMeterList = getPowerMeterList();
-		logger.debug("getPowerMeterList count : [{}]" , powerMeterList.size() );
+		logger.info("getPowerMeterList count : [{}]" , powerMeterList.size() );
 		for (PowerMeter powerMeter : powerMeterList ) {
 			sendPowerMeterMessage (powerMeter);
 			powerMeterTo = powerMeterTo < powerMeter.getHisDate().getTime() ? powerMeter.getHisDate().getTime() : powerMeterTo ;
@@ -66,7 +67,7 @@ public class ComputerRoomEnvService extends AbstractAgentService{
 		
 		long leakDetectTo = this.lastIngestTime ;
 		List<LeakDetection> leakDetectionList = getLeakDetectionList();
-		logger.debug("getLeakDetectionList count : [{}]" , leakDetectionList.size() );
+		logger.info("getLeakDetectionList count : [{}]" , leakDetectionList.size() );
 		for (LeakDetection leakDetection : leakDetectionList ) {
 			sendLeakDetectionMessage (leakDetection);
 			leakDetectTo = leakDetectTo < leakDetection.getHisDate().getTime() ? leakDetection.getHisDate().getTime() : leakDetectTo ;
@@ -76,6 +77,9 @@ public class ComputerRoomEnvService extends AbstractAgentService{
 		
 		try {
 			this.lastIngestTime = to ;
+			if( DateUtil.isDataIssue(this.lastIngestTime, TimeZone.getDefault()) ) {
+				logger.warn("Data collection time is more than 2 hours. last collection time[{}] " , new Timestamp(this.lastIngestTime));
+			}
 			savePropertiesSet();
 		} catch (Exception e) {
 			logger.error("savePropertiesSet fail.",e);

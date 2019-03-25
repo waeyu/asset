@@ -60,7 +60,7 @@ public abstract class AbstractAgentService {
 	
 	protected int period;
 	
-	private HttpConnection httpConnection;
+	protected HttpConnection httpConnection;
 	
 	protected long lastIngestTime;
 	
@@ -155,15 +155,16 @@ public abstract class AbstractAgentService {
 		
 		ItaAuthVO authVo;
 		try {
-			authVo = authManager.getAuthCode(this.siteId, this.thingName, userToken, "webs");
+			authVo = authManager.getAuthCode(this.siteId, this.thingName, userToken, "tcp" );
 		} catch (Exception e) {
-			throw new OcpException("fail to get auth code.");
+			logger.warn("getAuthCode fail ",e);
+			throw new OcpException("fail to get auth code.",e);
 		}
 		
 		logger.debug("Success to get AuthCode siteId:[{}] thingName:[{}]." , siteId , thingName);
 
 	    String connServerURI = getConnServerURI(authVo);
-	    this.connectManager = new IotConnectManager(IotProtocolCode.WEBS, connServerURI);
+	    this.connectManager = new IotConnectManager(IotProtocolCode.TCP, connServerURI);
 	     
 	    // 4. connect with authentication-info.
 	    try {

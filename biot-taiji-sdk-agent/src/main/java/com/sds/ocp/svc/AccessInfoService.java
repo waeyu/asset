@@ -4,6 +4,7 @@ import java.io.File;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -59,14 +60,14 @@ public class AccessInfoService extends AbstractAgentService{
 		logger.debug("action begin.");
 		
 		List<AccessDoor> accessDoorList = getAccessDoorList();
-		logger.debug("getAccessDoorList count : [{}]" , accessDoorList.size() );
+		logger.info("getAccessDoorList count : [{}]" , accessDoorList.size() );
 		for (AccessDoor accessDoor : accessDoorList ) {
 			sendAccessDoorMessage (accessDoor);
 		}
 		
 		long alarmTo = this.lastIngestTime ;
 		List<AccessAlarm> accessAlarmList = getAccessAlarmList();
-		logger.debug("getAccessAlarmList count : [{}]" , accessAlarmList.size() );
+		logger.info("getAccessAlarmList count : [{}]" , accessAlarmList.size() );
 		for (AccessAlarm accessAlarm : accessAlarmList ) {
 			sendAccessAlarmMessage (accessAlarm);
 			alarmTo = alarmTo < accessAlarm.getAlarmEventTime().getTime() ? accessAlarm.getAlarmEventTime().getTime() : alarmTo ;
@@ -74,7 +75,7 @@ public class AccessInfoService extends AbstractAgentService{
 		
 		long cardTo = this.lastIngestTime ;
 		List<AccessCard> accessCardList = getAccessCardList();
-		logger.debug("getAccessCardList count : [{}]" , accessCardList.size() );
+		logger.info("getAccessCardList count : [{}]" , accessCardList.size() );
 		for (AccessCard accessCard : accessCardList ) {
 			sendAccessCardMessage (accessCard);
 			cardTo = cardTo < accessCard.getCardEventTime().getTime() ? accessCard.getCardEventTime().getTime() : cardTo ;
@@ -84,6 +85,9 @@ public class AccessInfoService extends AbstractAgentService{
 		
 		try {
 			this.lastIngestTime = to ;
+			if( DateUtil.isDataIssue(this.lastIngestTime, TimeZone.getDefault()) ) {
+				logger.warn("Data collection time is more than 2 hours. last collection time[{}] " , new Timestamp(this.lastIngestTime));
+			}
 			savePropertiesSet();
 		} catch (Exception e) {
 			logger.error("savePropertiesSet fail.",e);

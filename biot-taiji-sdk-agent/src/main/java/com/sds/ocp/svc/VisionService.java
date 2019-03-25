@@ -47,7 +47,7 @@ public class VisionService extends AbstractAgentService{
 		
 		logger.debug("action begin.");
 		List<Vision> visionList = getList();
-		logger.debug("getlist count : [{}]" , visionList.size() );
+		logger.info("visionList count : [{}]" , visionList.size() );
 		for (Vision vision : visionList ) {
 			sendMessage (vision);
 		}

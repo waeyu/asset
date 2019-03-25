@@ -14,8 +14,8 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 /**
- * 날짜 시각 관련 유틸 클래스. <br/> 
- * 현재 클래스 또는 long, Date 타입 객체를 날짜 형태로 포매팅 하는 메서드 위주 
+ * �궇吏� �떆媛� 愿��젴 �쑀�떥 �겢�옒�뒪. <br/> 
+ * �쁽�옱 �겢�옒�뒪 �삉�뒗 long, Date ���엯 媛앹껜瑜� �궇吏� �삎�깭濡� �룷留ㅽ똿 �븯�뒗 硫붿꽌�뱶 �쐞二� 
  * 
  * <h4>Date and Time Patterns</h4>
  * 
@@ -168,8 +168,8 @@ import org.joda.time.format.DateTimeFormatter;
  * </blockquote>
  *
  * @see SimpleDateFormat
- * @author 김태호 <th71.kim@samsung.com>
- * @author 김성혜
+ * @author 源��깭�샇 <th71.kim@samsung.com>
+ * @author 源��꽦�삙
  * 
  */
 public final class DateUtil {
@@ -282,12 +282,12 @@ public final class DateUtil {
 	 * @return
 	 */
 	public static String addDays(String pattern, int addDays) {
-		// 1일: (millis*1000*60초*60분*24시)
+		// 1�씪: (millis*1000*60珥�*60遺�*24�떆)
 		return formatDefaultLocale(pattern, System.currentTimeMillis() + ((long) addDays * 1000 * 60 * 60 * 24));
 	}
 
 	/**
-	 * 현재 기준 month전 날짜 timestamp로 return
+	 * �쁽�옱 湲곗� month�쟾 �궇吏� timestamp濡� return
 	 *
 	 * @param month
 	 * @return
@@ -299,14 +299,14 @@ public final class DateUtil {
 	}
 
 	/**
-	 * 입력받은 일자 이후 일자를 반환한다.
+	 * �엯�젰諛쏆� �씪�옄 �씠�썑 �씪�옄瑜� 諛섑솚�븳�떎.
 	 * 
 	 * @param instant
-	 *        기준일자
+	 *        湲곗��씪�옄
 	 * @param days
-	 *        더날 일자
-	 * @return 더해진 일자
-	 * @author 손성훈
+	 *        �뜑�궇 �씪�옄
+	 * @return �뜑�빐吏� �씪�옄
+	 * @author �넀�꽦�썕
 	 */
 	public static long addDays(long instant, int days) {
 		if (days == 0) {
@@ -403,6 +403,16 @@ public final class DateUtil {
 		long cur = System.currentTimeMillis(); 
 		to = to < cur ? cur : to ;
 		return to ;
+	}
+	
+	public static boolean isDataIssue(long lastTime, TimeZone timeZone) {
+		String hour = getCurDateTime("hh", timeZone );
+		Integer iHour = Integer.parseInt(hour);
+		if( iHour >= 8 && iHour <= 18 
+				&& lastTime < System.currentTimeMillis() - 3600000 * 2 ) {
+			return true;
+		}
+		return false;
 	}
 	
 	

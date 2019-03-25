@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd 
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-5.0.xsd ">
+
+	<util:properties id="comProperties"  location="classpath:application.properties" />
+	<context:component-scan base-package="com.sds.ocp.svc" use-default-filters="true" />
+	
+	<task:scheduler id="cuuppaModuleScheduler" pool-size="10" />
+	<task:scheduled-tasks scheduler="cuuppaModuleScheduler">
+
+		<task:scheduled ref="moduleExecutor" method="locatorExecute" 
+		      fixed-delay="#{comProperties['locator.schedule.period'] != null ? comProperties['locator.schedule.period'] : 5000 }" 		      
+			  initial-delay="#{comProperties['locator.schedule.initialDelay'] != null ? comProperties['locator.schedule.initialDelay'] : 1000 }"/>
+
+		<task:scheduled ref="moduleExecutor" method="tagExecute" 
+		      fixed-delay="#{comProperties['tag.schedule.period'] != null ? comProperties['tag.schedule.period'] : 5000 }" 		      
+			  initial-delay="#{comProperties['tag.schedule.initialDelay'] != null ? comProperties['tag.schedule.initialDelay'] : 3000 }"/>
+
+	</task:scheduled-tasks>
+	
+	<bean id="httpConnection" class="com.sds.ocp.rest.HttpConnection">
+		<property name="sslContextGenerator" ref="clientSslContextGenerator" />
+	</bean>
+	
+	<!-- SSL -->
+	<bean id="clientSslContextGenerator" class="com.sds.ocp.rest.ClientSSLContextGenerator"/>
+
+</beans>

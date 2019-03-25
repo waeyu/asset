@@ -2,6 +2,7 @@ package com.sds.ocp.svc;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -44,13 +45,16 @@ public class CarInOutInfoService extends AbstractAgentService{
 
 		long to = this.lastIngestTime ;
 		List<CarInOutInfo> carInOutInfoList = getList();
-		logger.debug("getlist count : [{}]" , carInOutInfoList.size() );
+		logger.info("carInOutInfoList count : [{}]" , carInOutInfoList.size() );
 		for (CarInOutInfo carInOutInfo : carInOutInfoList) {
 			sendMessage (carInOutInfo);
 			to = to < carInOutInfo.getCrdtm().getTime() ? carInOutInfo.getCrdtm().getTime() : to ;
 		}
 		try {
 			this.lastIngestTime = to ;
+			if( DateUtil.isDataIssue(this.lastIngestTime, TimeZone.getDefault()) ) {
+				logger.warn("Data collection time is more than 2 hours. last collection time[{}] " , new Timestamp(this.lastIngestTime));
+			}
 			savePropertiesSet();
 		} catch (Exception e) {
 			logger.error("savePropertiesSet fail.",e);
